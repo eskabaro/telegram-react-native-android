@@ -1,4 +1,11 @@
-export type Screens = {
+export type ScreensDrawerParamList = {
    Home: undefined
-   Chat: undefined
+   Chat: {
+      chatId: string
+   }
+}
+
+export type ScreensStackParamList = {
+   Login: undefined
+   Register: undefined
 }
