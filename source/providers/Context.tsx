@@ -9,26 +9,33 @@ import {
 } from "react"
 import { IUser } from "../services/auth/types"
 
-type SetLangType<T> = Dispatch<SetStateAction<T>>
+type SetStateType<T> = Dispatch<SetStateAction<T>>
 type UserType = IUser | undefined
 
 interface IContext {
    user: UserType
-   setUser: SetLangType<UserType>
+   setUser: SetStateType<UserType>,
+   isHomeLoad: boolean,
+   setIsHomeLoad: SetStateType<boolean>
 }
 
 export const Context = createContext<IContext>({
    user: undefined,
-   setUser: () => { }
+   setUser: () => { },
+   isHomeLoad: false,
+   setIsHomeLoad: () => { }
 })
 
 export const ContextProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
    const [user, setUser] = useState<UserType>(undefined)
+   const [isHomeLoad, setIsHomeLoad] = useState<boolean>(false)
 
    const contextValue: IContext = useMemo(() => ({
       user,
-      setUser
-   }), [user])
+      setUser,
+      isHomeLoad,
+      setIsHomeLoad
+   }), [user, isHomeLoad])
 
    return (
       <Context.Provider value={contextValue}>

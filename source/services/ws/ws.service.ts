@@ -5,8 +5,6 @@ export class WS {
    static socket: null | Socket = null
 
    static createConnection() {
-      console.log('adad');
-      
       this.socket = io(BASE_WS_API_URL)
 
       this.socket.on('connect', () => {

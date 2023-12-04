@@ -1,8 +1,9 @@
+import { IChat } from "../services/chat/types"
+
 export type ScreensDrawerParamList = {
    Home: undefined
-   Chat: {
-      chatId: string
-   }
+   Chat: IChat
+   Friends: undefined
 }
 
 export type ScreensStackParamList = {
