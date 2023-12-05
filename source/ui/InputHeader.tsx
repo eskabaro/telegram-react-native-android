@@ -5,8 +5,13 @@ import { StylesConfig } from "../styles-config"
 import Icon from "react-native-vector-icons/MaterialIcons"
 
 export const InputHeader: FC = () => {
-   const { setHeaderInputShow } = useContext(Context)
+   const { setHeaderInputShow, inputValue, setInputValue } = useContext(Context)
    const inputRef = useRef<TextInput>(null)
+
+   const closeHeaderInput = () => {
+      setHeaderInputShow("")
+      setInputValue("")
+   }
 
    useEffect(() => {
       if (inputRef.current) {
@@ -16,7 +21,7 @@ export const InputHeader: FC = () => {
 
    return (
       <View style={styles.wrapper}>
-         <Icon name="arrow-back" size={25} color={StylesConfig.smoke} onPress={() => setHeaderInputShow(false)} />
+         <Icon name="arrow-back" size={25} color={StylesConfig.smoke} onPress={closeHeaderInput} />
          <TextInput
             ref={inputRef}
             style={styles.input}
@@ -24,7 +29,8 @@ export const InputHeader: FC = () => {
             keyboardType="web-search"
             placeholderTextColor={StylesConfig.smoke}
             returnKeyType="search"
-            
+            value={inputValue}
+            onChangeText={setInputValue}
          />
       </View>
    )
@@ -33,12 +39,13 @@ export const InputHeader: FC = () => {
 const styles = StyleSheet.create({
    wrapper: {
       width: "100%", height: "100%",
-      display: "flex", gap: 5,
+      display: "flex", gap: 15,
       flexDirection: "row",
       alignItems: "center",
       paddingHorizontal: "3%"
    },
    input: {
+      width: "100%",
       fontSize: 17,
       fontWeight: "500"
    }

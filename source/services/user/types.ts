@@ -5,5 +5,4 @@ export interface IFriend {
    name: string
    username: string
    avatarPath: string
-   userId: string
 }

@@ -11,14 +11,17 @@ import { IUser } from "../services/auth/types"
 
 type SetStateType<T> = Dispatch<SetStateAction<T>>
 type UserType = IUser | undefined
+type HeaderInputShowType = "search" | "add" | ""
 
 interface IContext {
    user: UserType
    setUser: SetStateType<UserType>,
    isHomeLoad: boolean,
    setIsHomeLoad: SetStateType<boolean>,
-   headerInputShow: boolean,
-   setHeaderInputShow: SetStateType<boolean>
+   headerInputShow: HeaderInputShowType,
+   setHeaderInputShow: SetStateType<HeaderInputShowType>,
+   inputValue: string,
+   setInputValue: SetStateType<string>
 }
 
 export const Context = createContext<IContext>({
@@ -26,14 +29,17 @@ export const Context = createContext<IContext>({
    setUser: () => { },
    isHomeLoad: false,
    setIsHomeLoad: () => { },
-   headerInputShow: false,
-   setHeaderInputShow: () => { }
+   headerInputShow: "",
+   setHeaderInputShow: () => { },
+   inputValue: "",
+   setInputValue: () => { }
 })
 
 export const ContextProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
    const [user, setUser] = useState<UserType>(undefined)
    const [isHomeLoad, setIsHomeLoad] = useState<boolean>(false)
-   const [headerInputShow, setHeaderInputShow] = useState<boolean>(false)
+   const [headerInputShow, setHeaderInputShow] = useState<HeaderInputShowType>("")
+   const [inputValue, setInputValue] = useState<string>("")
 
    const contextValue: IContext = useMemo(() => ({
       user,
@@ -41,8 +47,10 @@ export const ContextProvider: FC<PropsWithChildren<unknown>> = ({ children }) =>
       isHomeLoad,
       setIsHomeLoad,
       headerInputShow,
-      setHeaderInputShow
-   }), [user, isHomeLoad, headerInputShow])
+      setHeaderInputShow,
+      inputValue,
+      setInputValue
+   }), [user, isHomeLoad, headerInputShow, inputValue])
 
    return (
       <Context.Provider value={contextValue}>

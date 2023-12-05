@@ -26,6 +26,24 @@ class User {
 
       return data
    }
+
+   async getUsersByUserName(username: string): Promise<IFriend[] | undefined> {
+      const { data } = await axios.get<IFriend[] | undefined>(`user/${username}`, {
+         headers: {
+            Authorization: `Bearer ${await JWT.getAccessToken()}`
+         }
+      })
+
+      return data
+   }
+
+   async addNewFriend(id: string): Promise<void> {
+      await axios.post(`user/add-friend/${id}`, null, {
+         headers: {
+            Authorization: `Bearer ${await JWT.getAccessToken()}`
+         }
+      })
+   }
 }
 
 export const UserService = new User()

@@ -4,7 +4,6 @@ import { HomeNavigator } from "./Home"
 import { AuthNavigator } from "./Auth"
 import { useQuery } from "@tanstack/react-query"
 import { UserService } from "../services/user/user.service"
-import { Text } from "react-native"
 import SplashScreen from "react-native-splash-screen"
 
 export const RootNavigator: FC = () => {
@@ -21,10 +20,6 @@ export const RootNavigator: FC = () => {
          SplashScreen.hide()
       }
    }, [data])
-
-   if (isLoading) return (
-      <Text>Loading...</Text>
-   )
 
    return user ? (
       <HomeNavigator />
