@@ -13,8 +13,7 @@ export const FriendsScreen: FC = () => {
       queryFn: UserService.getFriends
    })
 
-
-   if (headerInputShow) {
+   if (headerInputShow === "add") {
       return (
          <View></View>
       )

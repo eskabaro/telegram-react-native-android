@@ -39,7 +39,7 @@ export const HomeNavigator: FC = () => {
             options={({ navigation }) => ({
                headerLeft: () => <Icon name="menu" size={25} color="white" onPress={() => navigation.openDrawer()} />,
                headerTitle: () => <HeaderTitle isLoading={isHomeLoad} title="Telegram" />,
-               headerRight: () => headerInputShow ? <InputHeader /> : <Icon name="search" size={25} color="white" onPress={() => setHeaderInputShow(true)} />
+               headerRight: () => headerInputShow ? <InputHeader /> : <Icon name="search" size={25} color="white" onPress={() => setHeaderInputShow("search")} />
             })}
          />
          <Drawer.Screen
@@ -53,8 +53,8 @@ export const HomeNavigator: FC = () => {
                headerLeft: () => <Icon name="arrow-back" size={25} color="white" onPress={() => navigation.goBack()} />,
                headerRight: () => headerInputShow ? <InputHeader /> : (
                   <View style={styles.icons_box}>
-                     <Icon name="search" size={25} color="white" onPress={() => setHeaderInputShow(true)} />
-                     <Icon name="add" size={25} color="white" />
+                     <Icon name="search" size={25} color="white" onPress={() => setHeaderInputShow("search")} />
+                     <Icon name="add" size={25} color="white" onPress={() => setHeaderInputShow("add")} />
                   </View>
                ),
             })}
@@ -66,7 +66,6 @@ export const HomeNavigator: FC = () => {
 const CustomDrawerContent: FC = () => {
    const { navigate, getState } = useNavigation<NavigationProp<ScreensDrawerParamList>>()
    const { user } = useContext(Context)
-
 
    return (
       <SafeAreaView style={styles.wrapper}>
