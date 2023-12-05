@@ -26,8 +26,7 @@ export const HomeNavigator: FC = () => {
             headerTitleStyle: { color: 'white' },
             headerTintColor: "white",
             headerRightContainerStyle: { paddingRight: "5%" },
-            headerLeftContainerStyle: { paddingLeft: "5%" },
-            // headerSearchBarOptions: {}
+            headerLeftContainerStyle: { paddingLeft: "5%" }
          }}
       >
          <Drawer.Screen
@@ -35,7 +34,9 @@ export const HomeNavigator: FC = () => {
             component={HomeScreen}
             options={({ navigation }) => ({
                headerLeft: () => <Icon name="menu" size={25} color="white" onPress={() => navigation.openDrawer()} />,
-               headerTitle: () => <HeaderTitle isLoading={isHomeLoad} title="Telegram" />
+               headerTitle: () => <HeaderTitle isLoading={isHomeLoad} title="Telegram" />,
+               headerRight: () => <Text>Add</Text>,
+               headerRightContainerStyle: { width: "100%", height: "100%", position: "absolute" }
             })}
          />
          <Drawer.Screen
@@ -47,7 +48,7 @@ export const HomeNavigator: FC = () => {
             component={FriendsScreen}
             options={({ navigation }) => ({
                headerLeft: () => <Icon name="arrow-back" size={25} color="white" onPress={() => navigation.goBack()} />,
-               headerRight: () => <Icon name="add" size={25} color="white" />
+               headerRight: () => <Icon name="add" size={25} color="white" />,
             })}
          />
       </Drawer.Navigator>
