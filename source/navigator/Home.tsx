@@ -1,31 +1,35 @@
 import { FC, useContext } from "react"
+import { Pressable, SafeAreaView, StatusBar, StyleSheet, Text, View } from "react-native"
 import { createDrawerNavigator } from "@react-navigation/drawer"
-import { Link } from "@react-navigation/native"
-import { ActivityIndicator, Pressable, SafeAreaView, StatusBar, StyleSheet, Text, View } from "react-native"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
-import { ScreensDrawerParamList } from "./types"
+import { Context } from "../providers/Context"
 import { HomeScreen } from "../screens/Home"
 import { ChatScreen } from "../screens/Chat"
-import { StylesConfig } from "../styles-config"
-import { AvatarBox } from "../ui/AvatarBox"
-import { Context } from "../providers/Context"
-import { HeaderTitle } from "../ui/HeaderTitle"
 import { FriendsScreen } from "../screens/Friends"
+import { HeaderTitle } from "../ui/HeaderTitle"
+import { InputHeader } from "../ui/InputHeader"
+import { AvatarBox } from "../ui/AvatarBox"
+import { StylesConfig } from "../styles-config"
+import { ScreensDrawerParamList } from "./types"
 import Icon from "react-native-vector-icons/MaterialIcons"
 
 const Drawer = createDrawerNavigator<ScreensDrawerParamList>()
 
 export const HomeNavigator: FC = () => {
-   const { isHomeLoad } = useContext(Context)
+   const { isHomeLoad, headerInputShow, setHeaderInputShow } = useContext(Context)
 
    return (
       <Drawer.Navigator
          drawerContent={() => <CustomDrawerContent />}
          screenOptions={{
-            headerStyle: { backgroundColor: StylesConfig["dark-blue"] },
+            headerStyle: { backgroundColor: headerInputShow ? "white" : StylesConfig["dark-blue"] },
             headerTitleStyle: { color: 'white' },
             headerTintColor: "white",
-            headerRightContainerStyle: { paddingRight: "5%" },
+            headerRightContainerStyle: {
+               paddingRight: "5%",
+               width: "100%", height: "100%",
+               position: headerInputShow ? "absolute" : "relative"
+            },
             headerLeftContainerStyle: { paddingLeft: "5%" }
          }}
       >
@@ -35,8 +39,7 @@ export const HomeNavigator: FC = () => {
             options={({ navigation }) => ({
                headerLeft: () => <Icon name="menu" size={25} color="white" onPress={() => navigation.openDrawer()} />,
                headerTitle: () => <HeaderTitle isLoading={isHomeLoad} title="Telegram" />,
-               headerRight: () => <Text>Add</Text>,
-               headerRightContainerStyle: { width: "100%", height: "100%", position: "absolute" }
+               headerRight: () => headerInputShow ? <InputHeader /> : <Icon name="search" size={25} color="white" onPress={() => setHeaderInputShow(true)} />
             })}
          />
          <Drawer.Screen
@@ -48,7 +51,12 @@ export const HomeNavigator: FC = () => {
             component={FriendsScreen}
             options={({ navigation }) => ({
                headerLeft: () => <Icon name="arrow-back" size={25} color="white" onPress={() => navigation.goBack()} />,
-               headerRight: () => <Icon name="add" size={25} color="white" />,
+               headerRight: () => headerInputShow ? <InputHeader /> : (
+                  <View style={styles.icons_box}>
+                     <Icon name="search" size={25} color="white" onPress={() => setHeaderInputShow(true)} />
+                     <Icon name="add" size={25} color="white" />
+                  </View>
+               ),
             })}
          />
       </Drawer.Navigator>
@@ -108,5 +116,10 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: "white",
       paddingHorizontal: "4%",
+   },
+   icons_box: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 5
    }
 })

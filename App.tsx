@@ -5,19 +5,20 @@
  * @format
  */
 
-import { useEffect } from "react"
+import { useContext, useEffect } from "react"
 import { StatusBar } from "react-native"
 import { RootProvider } from "./source/providers/Root"
 import { RootNavigator } from "./source/navigator/Root"
-import SplashScreen from "react-native-splash-screen"
+import { Context } from "./source/providers/Context"
 
 export default function App(): JSX.Element {
+  const { headerInputShow } = useContext(Context)
+
   useEffect(() => {
     StatusBar.setBackgroundColor('transparent')
-    StatusBar.setBarStyle('light-content')
+    StatusBar.setBarStyle("dark-content")
     StatusBar.setTranslucent(true)
-    SplashScreen.hide()
-  }, [])
+  }, [headerInputShow])
 
   return (
     <RootProvider>

@@ -5,6 +5,7 @@ import { AuthNavigator } from "./Auth"
 import { useQuery } from "@tanstack/react-query"
 import { UserService } from "../services/user/user.service"
 import { Text } from "react-native"
+import SplashScreen from "react-native-splash-screen"
 
 export const RootNavigator: FC = () => {
    const { user, setUser } = useContext(Context)
@@ -15,7 +16,10 @@ export const RootNavigator: FC = () => {
    })
 
    useEffect(() => {
-      if (data) setUser(data)
+      if (!isLoading && data) {
+         setUser(data)
+         SplashScreen.hide()
+      }
    }, [data])
 
    if (isLoading) return (
